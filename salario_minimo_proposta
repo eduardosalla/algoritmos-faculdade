@@ -140,7 +140,7 @@ baseIrProposto <- salarioProposto - inssProposto
 
 // ================= IR ATUAL =================
 
-se baseIrAtual <= 2259.20 entao
+se baseIrAtual <= 5000 entao
     irAtual <- 0
 senao
 se baseIrAtual <= 2826.65 entao
@@ -161,7 +161,7 @@ fimse
 
 // ================= IR PROPOSTO =================
 
-se baseIrProposto <= 2259.20 entao
+se baseIrProposto <= 5000 entao
     irProposto <- 0
 senao
 se baseIrProposto <= 2826.65 entao
