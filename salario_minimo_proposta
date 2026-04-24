@@ -1,0 +1,203 @@
+algoritmo "CalculoPropostaSalarial"
+
+var
+salarioAtual, salarioProposto : real
+horasAtual, horasProposta : real
+
+horaSaiAtual, horaChegaAtual : real
+horaSaiProposta, horaChegaProposta : real
+
+horasDiaAtual, horasDiaProposta : real
+
+opcao : inteiro
+
+valorHoraAtual : real
+salarioCompensar : real
+percentualExtra : real
+
+// impostos
+inssAtual, inssProposto : real
+irAtual, irProposto : real
+
+baseIrAtual, baseIrProposto : real
+
+inicio
+
+escreva("SALARIO ATUAL: R$ ")
+leia(salarioAtual)
+
+escreval("")
+escreval("OPCAO 1 - Ja sei as horas semanais")
+escreval("OPCAO 2 - Informar horario de sair e chegar")
+leia(opcao)
+
+escolha opcao
+
+// =============================
+caso 1
+
+    escreva("HORAS ATUAIS SEMANAIS: ")
+    leia(horasAtual)
+
+    escreva("HORAS PROPOSTAS SEMANAIS: ")
+    leia(horasProposta)
+
+
+// =============================
+caso 2
+
+    escreval("")
+    escreval("HORARIO ATUAL")
+    escreva("Sai de casa (ex: 7.5): ")
+    leia(horaSaiAtual)
+
+    escreva("Chega em casa (ex: 18.25): ")
+    leia(horaChegaAtual)
+
+    horasDiaAtual <- horaChegaAtual - horaSaiAtual
+    horasAtual <- horasDiaAtual * 5
+
+    escreval("HORAS SEMANAIS ATUAL: ", horasAtual:0:2)
+
+    escreval("")
+    escreval("HORARIO PROPOSTO")
+
+    escreva("Sai de casa: ")
+    leia(horaSaiProposta)
+
+    escreva("Chega em casa: ")
+    leia(horaChegaProposta)
+
+    horasDiaProposta <- horaChegaProposta - horaSaiProposta
+    horasProposta <- horasDiaProposta * 5
+
+    escreval("HORAS SEMANAIS PROPOSTA: ", horasProposta:0:2)
+
+outrocaso
+    escreval("Opcao invalida")
+
+fimescolha
+
+
+// valor hora atual
+valorHoraAtual <- salarioAtual / horasAtual
+
+// salario para compensar
+salarioCompensar <- valorHoraAtual * horasProposta
+
+escreval("")
+escreval("VALOR HORA ATUAL: R$ ", valorHoraAtual:0:2)
+escreval("SALARIO MINIMO PARA COMPENSAR: R$ ", salarioCompensar:0:2)
+
+
+// adicional
+escreval("")
+escreva("Percentual extra desejado (%): ")
+leia(percentualExtra)
+
+salarioProposto <- salarioCompensar + (salarioCompensar * percentualExtra / 100)
+
+escreval("SALARIO A PEDIR: R$ ", salarioProposto:0:2)
+
+
+// ================= INSS ATUAL =================
+
+se salarioAtual <= 1412 entao
+    inssAtual <- salarioAtual * 0.075
+senao
+se salarioAtual <= 2666.68 entao
+    inssAtual <- salarioAtual * 0.09
+senao
+se salarioAtual <= 4000.03 entao
+    inssAtual <- salarioAtual * 0.12
+senao
+    inssAtual <- salarioAtual * 0.14
+fimse
+fimse
+fimse
+
+
+// ================= INSS PROPOSTO =================
+
+se salarioProposto <= 1412 entao
+    inssProposto <- salarioProposto * 0.075
+senao
+se salarioProposto <= 2666.68 entao
+    inssProposto <- salarioProposto * 0.09
+senao
+se salarioProposto <= 4000.03 entao
+    inssProposto <- salarioProposto * 0.12
+senao
+    inssProposto <- salarioProposto * 0.14
+fimse
+fimse
+fimse
+
+
+baseIrAtual <- salarioAtual - inssAtual
+baseIrProposto <- salarioProposto - inssProposto
+
+
+// ================= IR ATUAL =================
+
+se baseIrAtual <= 2259.20 entao
+    irAtual <- 0
+senao
+se baseIrAtual <= 2826.65 entao
+    irAtual <- (baseIrAtual * 0.075) - 169.44
+senao
+se baseIrAtual <= 3751.05 entao
+    irAtual <- (baseIrAtual * 0.15) - 381.44
+senao
+se baseIrAtual <= 4664.68 entao
+    irAtual <- (baseIrAtual * 0.225) - 662.77
+senao
+    irAtual <- (baseIrAtual * 0.275) - 896
+fimse
+fimse
+fimse
+fimse
+
+
+// ================= IR PROPOSTO =================
+
+se baseIrProposto <= 2259.20 entao
+    irProposto <- 0
+senao
+se baseIrProposto <= 2826.65 entao
+    irProposto <- (baseIrProposto * 0.075) - 169.44
+senao
+se baseIrProposto <= 3751.05 entao
+    irProposto <- (baseIrProposto * 0.15) - 381.44
+senao
+se baseIrProposto <= 4664.68 entao
+    irProposto <- (baseIrProposto * 0.225) - 662.77
+senao
+    irProposto <- (baseIrProposto * 0.275) - 896
+fimse
+fimse
+fimse
+fimse
+
+
+escreval("")
+escreval("=========== RESULTADO ===========")
+
+escreval("")
+escreval("SALARIO ATUAL BRUTO: ", salarioAtual:0:2)
+escreval("INSS ATUAL: ", inssAtual:0:2)
+escreval("IR ATUAL: ", irAtual:0:2)
+escreval("LIQUIDO ATUAL: ", salarioAtual - inssAtual - irAtual:0:2)
+
+escreval("")
+escreval("SALARIO PROPOSTO BRUTO: ", salarioProposto:0:2)
+escreval("INSS PROPOSTO: ", inssProposto:0:2)
+escreval("IR PROPOSTO: ", irProposto:0:2)
+escreval("LIQUIDO PROPOSTO: ", salarioProposto - inssProposto - irProposto:0:2)
+
+escreval("")
+escreval("AUMENTO LIQUIDO REAL: ",
+(salarioProposto - inssProposto - irProposto) -
+(salarioAtual - inssAtual - irAtual):0:2)
+
+fimalgoritmo
